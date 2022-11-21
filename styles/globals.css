@@ -1,26 +1,17 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
+img{
   box-sizing: border-box;
-}
+  position: absolute;
+  width: 273.38px;
+  height: 273.38px;
+  left: 742px;
+  top: 350.69px;
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+  /* Matty/600 */
+
+  border: 2.4957px solid #444F56;
+  transform: rotate(-45deg);
 }
