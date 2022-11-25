@@ -19,6 +19,7 @@ module.exports = {
       'bermuda': '#78dcca',
       'comp2': '#FAFAFA',
       'butCol': '#0174E3',
+      'silver': '#C0C0C0',
     },
   },
   plugins: [],

@@ -1,57 +1,44 @@
-import { useRouter } from 'next/router'
-import { useCallback } from 'react'
-import { useFormState } from 'react-hook-form';
+import Router, { useRouter } from 'next/router'
+import { useState } from 'react'
 
-
-function Login() {
+function Start() {
     const router = useRouter()
 
-    const handlesubmit = useCallback((e) => {
-        e.preventDefault()
-        const userid = document.querySelector('#userid').value
-        const password = document.querySelector('#password').value
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-                "userId": userid,
-                "password": password
-            }),
-        }).then((res)=> {
-            if (res.ok) router.push('./FaceAuthentication/face')
-        })
-    })
-    
+    const login = () =>{
+        router.push('./login')
+    }
     return(
-        <div className='grid grid-cols-2 divide-x'>
-            <div className="card w-full h-screen">
-                <h2 className="card-header my-2 ">Login</h2>
-                <div className='card-body'>
-                    <form  onSubmit={handlesubmit} >
-                    <div className='formgroup my-2'>
-                        <span className="block text-sm font-medium text-slate-700">UserId</span>
-                        <input type="text" id="userid" className='form-input box-content h-1 w-25 p-3 border-2 rounded-md' required/>
-                    </div>
-                    <div className='formgroup my-2'>
-                        <span className="block text-sm font-medium text-slate-700">Password</span>
-                        <input type="password" id="password" className="form-input box-content h-1 w-25 p-3 border-2 rounded-md" minLength="6" maxLength="20" required/>
-                    </div>
-                    <button type="Submit" disabled={useFormState.isSubmitting} className='bg-butCol rounded-md w-25'>
-                    {useFormState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                    Authenticate Face
-                    </button>
-                    </form>
+        <div className='flex'>
+            <div className='flex-auto w-2/4 h-screen mx-10'>
+                <div className='my-10'>
+                    <h1 className='text-4xl'>Log In</h1>
+                    <h4 className='text-xl mb-6'>Choose your role type</h4>
                 </div>
+                <div className='my-0 text-xl'>
+                    <button onClick={login} className='bg-silver mx-10 my-5 py-20 w-1/3 h-20 border-2 border-black'>Teacher</button>
+                    <button onClick={login} className='bg-silver mx-10 my-5 py-20 w-1/3 h-20 border-2 border-black'>Student</button>
+                    <button onClick={login} className='bg-silver mx-10 py-20 w-1/3 h-20 border-2 border-black'>Office Staff</button>
+                    <button onClick={login} className='bg-silver mx-10 py-20 w-1/3 h-20 border-2 border-black'>Admin</button>
                 </div>
+            </div>    
 
-        <div className="bg-comp2 w-full h-screen">
-            Design
-        </div>
+            <div className="flex-auto bg-comp2 w-2/4 h-screen">
+                <div className='bg-purple'>
+                    {/* <div className='border-black'>
+                        <img src="../styles/circle_FILL0_wght400_GRAD0_opsz48.svg"></img>
+                    </div> */}
+                    {/* <div >
+                        <img className='bg-purple' src="../styles/circle_white_24dp.svg"></img>
+                    </div>
+                    <div className="triangle border-r-black"></div>
+                    <div className="triangle border-l-black"></div> */}
+                </div>
             </div>
+        </div>
         
         
         
     )   
 }
 
-export default Login
+export default Start
