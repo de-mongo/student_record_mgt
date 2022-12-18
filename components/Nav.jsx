@@ -44,7 +44,7 @@ export default function () {
                         <span class="material-symbols-rounded"> arrow_drop_down </span>
                     </button>
                     {options && (
-                        <div className="flex flex-col gap-4 absolute top-10 px-6 p-4 w-52 right-0 bg-white rounded-lg border-2 border-matty-100">
+                        <div className="flex flex-col gap-4 absolute top-8 px-6 p-4 w-52 right-0 bg-white rounded-lg border-2 border-matty-100" onMouseLeave={() => setOptions(false)}>
                             <Link href="#" className="flex items-center gap-2 font-['Poppins'] text-sm font-normal">
                                 <span class="material-symbols-rounded">
                                     face_5
