@@ -1,6 +1,15 @@
+import Image from "next/image";
+import Link from 'next/link';
+import { useState } from "react";
+
 export default function () {
+    const [options, setOptions] = useState(false);
+    const user = {
+        name: "Stuart",
+        profile_url: `https://api.multiavatar.com/stuartrichard.svg`,
+    }
     return (
-        <nav className="flex p-4 px-6 text-matty-900">
+        <nav className="flex p-4 px-6 pl-28 text-matty-900 w-screen items-center">
             <div className="flex flex-1 items-center">
                 <svg className="mr-2" width="38" height="38" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9.33504 19.0932L6.42497 20.8085C6.14918 21.7331 6.99225 22.4628 7.89926 22.7994L9.33504 19.0932Z" fill="#003B76"/>
@@ -23,6 +32,42 @@ export default function () {
                     </defs>
                 </svg>
                 <div className="font-['Poppins'] text-lg font-medium ">EduList</div>
+            </div>
+            <div className="flex items-center gap-4">
+                <button className="flex items-center">
+                    <span class="material-symbols-rounded"> notifications </span>
+                </button>
+                <Image src={user.profile_url} width={24} height={24} alt={user.name}/>
+                <div className="relative flex items-center font-['Poppins'] font-medium">
+                    <button className="flex items-center" onClick={() => setOptions(!options)}>
+                        {user.name}
+                        <span class="material-symbols-rounded"> arrow_drop_down </span>
+                    </button>
+                    {options && (
+                        <div className="flex flex-col gap-4 absolute top-10 px-6 p-4 w-52 right-0 bg-white rounded-lg border-2 border-matty-100">
+                            <Link href="#" className="flex items-center gap-2 font-['Poppins'] text-sm font-normal">
+                                <span class="material-symbols-rounded">
+                                    face_5
+                                </span>
+                                Profile
+                            </Link>
+                            <Link href="#" className="flex items-center gap-2 font-['Poppins'] text-sm font-normal">
+                                <span class="material-symbols-rounded">
+                                    settings
+                                </span>
+                                Settings
+                            </Link>
+                            <hr className="bg-matty-100"/>
+                            <Link href="/" className="flex items-center gap-2 font-['Poppins'] text-sm font-normal text-red-500">
+                                <span class="material-symbols-rounded">
+                                    logout
+                                </span>
+                                Sign out
+                            </Link>
+                        </div>
+                    )}
+                    
+                </div>
             </div>
         </nav>
     )
