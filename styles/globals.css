@@ -2,16 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-img{
+/* img{
   box-sizing: border-box;
   position: absolute;
   width: 273.38px;
   height: 273.38px;
   left: 742px;
-  top: 350.69px;
+  top: 350.69px;  
 
   /* Matty/600 */
 
-  border: 2.4957px solid #444F56;
+  /* border: 2.4957px solid #444F56;
   transform: rotate(-45deg);
-}
+} */ 
