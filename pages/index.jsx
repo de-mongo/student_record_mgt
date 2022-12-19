@@ -4,6 +4,12 @@ import { useState } from 'react'
 function Start() {
     const router = useRouter()
 
+    const userType = [
+        {name: "Admin", code:1},
+        {name: "Faculty", code:2},
+        {name: "Student", code:3},
+        {name: "Office Staff", code:4}
+    ]
     const login = () =>{
         router.push('./login')
     }
@@ -15,10 +21,9 @@ function Start() {
                     <h4 className='text-xl mb-6'>Choose your role type</h4>
                 </div>
                 <div className='my-0 text-xl'>
-                    <button onClick={login} className='bg-silver mx-10 my-5 py-20 w-1/3 h-20 border-2 border-black'>Teacher</button>
-                    <button onClick={login} className='bg-silver mx-10 my-5 py-20 w-1/3 h-20 border-2 border-black'>Student</button>
-                    <button onClick={login} className='bg-silver mx-10 py-20 w-1/3 h-20 border-2 border-black'>Office Staff</button>
-                    <button onClick={login} className='bg-silver mx-10 py-20 w-1/3 h-20 border-2 border-black'>Admin</button>
+                {userType.map((users) => (
+                    <button onClick={login} className='bg-silver mx-10 my-5 py-20 w-1/3 h-20 border-2 border-black'>{users.name}</button>
+                ))}
                 </div>
             </div>    
 

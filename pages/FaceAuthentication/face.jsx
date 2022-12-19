@@ -1,22 +1,22 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useFormState } from 'react-hook-form';
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 function face(){
     const router = useRouter()
     
     const handlesubmit = useCallback((e) => {
-        e.preventDefault()
-        let data = document.querySelector('#img-data').value
+        // e.preventDefault()
+        // let data = document.querySelector('#img-data').value
         fetch('/api/hello', {
             method: 'POST',
             headers: {'Content-type': 'application/img'},
             body: {
-                "Image": data,
+                // "Image": data,
             },
         }).then((res)=> {
-            if (res.ok) router.push('./test')
+            if (res.ok) router.push('../dashboard/student')
         })
     })
 
@@ -93,15 +93,15 @@ const videoRef = useRef(null);
                             controls={false} className="player" autoPlay muted loop
                             />
                              <canvas ref={photoRef} className="photo h-0 w-0" />
-                            {/* <div className="photo-booth">
+                            <div className="photo-booth">
                             <div ref={stripRef} className="strip" />
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                     <button onClick={() => router.back()} className='bg-butCol rounded-md w-25'>
                      Back
                     </button>
-                    <button type="Submit" disabled={useFormState.isSubmitting} className='bg-butCol rounded-md w-25'>
+                    <button type="Submit" disabled={useFormState.isSubmitting} onClick={handlesubmit()} className='bg-butCol rounded-md w-25'>
                     {useFormState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                      Login
                     </button>
