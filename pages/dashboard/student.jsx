@@ -60,22 +60,22 @@ function student_dashboard() {
                             <div className="col-span-2">
                                 <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
                                     <div className="col-span-2">Course Title</div>
-                                    <div className="">Semester</div>
-                                    <div className="">Type</div>
-                                    <div className="">Instructor</div>
+                                    <div>Semester</div>
+                                    <div>Type</div>
+                                    <div>Instructor</div>
                                 </div>
                                 {course.map((list) => (
                                     <div key={list.name} className="grid grid-cols-5 py-3">
-                                        <div className="flex col-span-2 gap-3">
+                                        <div key={list.name} className="flex col-span-2 gap-3">
                                             {list.name}
                                         </div>
-                                        <div className="flex gap-4">
+                                        <div key={list.semester} className="flex gap-4">
                                             {list.semester}
                                         </div>
-                                        <div className="flex gap-3">
+                                        <div key={list.type} className="flex gap-3">
                                             {list.type}
                                         </div>
-                                        <div className="flex gap-3">
+                                        <div key={list.instructor} className="flex gap-3">
                                             <Image src={list.course_url} width={24} height={24} alt={list.name} />
                                             {list.instructor}
                                         </div>

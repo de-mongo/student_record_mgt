@@ -1,45 +1,54 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useFormState } from 'react-hook-form';
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function face(){
     const router = useRouter()
-    
+      // let navigate = useNavigate();
+
     const handlesubmit = useCallback((e) => {
         // e.preventDefault()
         // let data = document.querySelector('#img-data').value
-        fetch('/api/hello', {
+        fetch('http://localhost:3000/api/hello/', {
             method: 'POST',
+            credentials: 'same-origin',
             headers: {'Content-type': 'application/img'},
             body: {
-                // "Image": data,
+                "Image": data,
             },
         }).then((res)=> {
-            if (res.ok) router.push('../dashboard/student')
+            if (res.ok){
+              console.log("image-done");
+             router.push('../dashboard/student') // navigate("../dashboard/student"); 
+            }
         })
     })
 
-const videoRef = useRef(null);
+  const videoRef = useRef(null);
   const photoRef = useRef(null);
   const stripRef = useRef(null);
   const colorRef = useRef(null);
-
+  // const [mediaStream, setMediaStream] = useState<MediaStream | null>(null)
+    const setMediaStream = useState(null);
   useEffect(() => {
     getVideo();
   }, [videoRef]);
 
   const getVideo = () => {
     const getUserMedia = async () => {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({video: true});
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({video: true});
+        if(videoRef.current){
           videoRef.current.srcObject = stream;
           videoRef.current.play()
-        } catch (err) {
-          console.log(err);
         }
-      };
-      getUserMedia();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUserMedia();
+            
   };
 
   const paintToCanvas = () => {
@@ -63,14 +72,14 @@ const videoRef = useRef(null);
     //   color.style.borderColor = `rgb(${pixels.data[0]},${pixels.data[1]},${
     //     pixels.data[2]
     //   })`;
-    }, 200);
+    }, 20990);
   };
-
+  var data;
   const takePhoto = () => {
     let photo = photoRef.current;
     let strip = stripRef.current;
 
-    const data = photo.toDataURL("image/jpeg");
+    data = photo.toDataURL("/image/jpeg");
     console.log("Image Data: \n", data)
     // const link = document.createElement("a");
     // link.href = data;
@@ -83,26 +92,23 @@ const videoRef = useRef(null);
             <div className="card w-full h-screen">
                 <h2 className="card-header my-2 ">Login</h2>
                 <div className='card-body'>
-                    <div className='formgroup my-2'>
                         <span className="block text-sm font-medium text-slate-700">Capture Face</span>
                         <div className='webcam-video'>
                         <button onClick={() => takePhoto()}>Take a photo</button>
                             <video
                             onCanPlay={() => paintToCanvas()}
                             ref={videoRef} 
-                            controls={false} className="player" autoPlay muted loop
+                            controls={false} className="player" autoPlay muted
                             />
-                             <canvas ref={photoRef} className="photo h-0 w-0" />
-                            <div className="photo-booth">
+                             <canvas id='img-data' ref={photoRef} className="photo h-0 w-0" />
+                            {/* <div className="photo-booth">
                             <div ref={stripRef} className="strip" />
-                            </div>
+                            </div> */}
                         </div>
-                    </div>
-                    <button onClick={() => router.back()} className='bg-butCol rounded-md w-25'>
+                    <button className='bg-butCol rounded-md w-25'>
                      Back
                     </button>
-                    <button type="Submit" disabled={useFormState.isSubmitting} onClick={handlesubmit()} className='bg-butCol rounded-md w-25'>
-                    {useFormState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                    <button onClick={handlesubmit()} className='bg-butCol rounded-md w-25'>
                      Login
                     </button>
                 </div>
@@ -112,6 +118,6 @@ const videoRef = useRef(null);
             </div>
         </div>
     )
-} 
+}
 
 export default face
