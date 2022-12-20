@@ -1,25 +1,43 @@
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useFormState } from 'react-hook-form';
+import { useCookies } from "react-cookie"
+
+import axios from 'axios';
 
 
 function login() {
     const router = useRouter()
-    function handleChechbox(e) {}
-    const handlesubmit = useCallback((e) => {
+    const [cookie, setCookie] = useCookies(["jwt"])
+    // function handleChechbox(e) {}
+    const handlesubmit = useCallback(async (e) => {
         e.preventDefault()
         const userid = document.querySelector('#userid').value
         const password = document.querySelector('#password').value
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-                "userId": userid,
-                "password": password
-            }),
-        }).then((res)=> {
-            if (res.ok) router.push('./FaceAuthentication/face')
-        })
+        console.log(process.env.PORT)
+
+        let res = await axios.post(`http://localhost:4000/api/v1/auth/login`, {
+            email: userid,
+            password: password,
+        }, {withCredentials: true})
+
+        console.log(res)
+        if (res.statusText === "OK") router.push('./FaceAuthentication/face')
+        // setCookie("jwt", res.data.jwt, )
+
+        // fetch(`http://localhost:4000/api/v1/auth/login`, {
+        //     method: 'POST',
+        //     headers: {'Content-type': 'application/json'},
+        //     credentials: true,
+        //     body: JSON.stringify({
+        //         "email": userid,
+        //         "password": password
+        //     }, ),
+        // }).then((res)=> {
+        //     // setCookie("jwt", JSON.stringify)
+        //     console.log(res)
+        //     // if (res.ok) router.push('./FaceAuthentication/face')
+        // })
     })
     
     return(
