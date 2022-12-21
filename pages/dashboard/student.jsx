@@ -1,31 +1,30 @@
 import { useRouter } from 'next/router'
-import { useCallback } from 'react'
-import { useFormState } from 'react-hook-form';
+import { useState, useEffect } from 'react'
+import axios from 'axios';
+// import { useFormState } from 'react-hook-form';
 import SideNav from "../../components/SideNav";
 import Nav from "../../components/Nav";
 import Head from 'next/head';
 import Image from 'next/image'
-
+import ListCourses from '../../components/ListCourses';
 
 function student_dashboard() {
-    const router = useRouter()
+    // const router = useRouter()
     const name = "vivek kumar";
+    const [data, setData] = useState([])
+    async function fetchMyCourses() {
+        let res = await axios.get(`http://localhost:4000/api/v1/courses/me`, {withCredentials: true})
+        // console.log(res)
+        setData(res.data)
+    }
 
-    const course = [
-        {
-            name: "Data Engineering",
-            instructor: "Mridula Verma",
-            type: "Elective",
-            semester: 7,
-            course_url: "https://api.multiavatar.com/check.png"
-        },
-        {
-            name: "Essentials of AI",
-            instructor: "Salman abdul",
-            type: "Core",
-            semester: 7,
-            course_url: "https://api.multiavatar.com/check.png"
-        }
+    useEffect(() => {
+        fetchMyCourses()
+    }, [])
+    let active = "Home"
+    let links = [
+        {name: "Home", icon: "home", link: "/dashboard/student"},
+        {name: "Courses", icon: "book", link: "/dashboard/student/courses"}
     ]
 
     const totalCourse = [
@@ -39,7 +38,7 @@ function student_dashboard() {
                 <title>Student Dashboard</title>
             </Head>
             <div className="fixed">
-                <SideNav />
+                <SideNav links={links} active={active} />
             </div>
             <div className="fixed">
                 <Nav />
@@ -59,27 +58,13 @@ function student_dashboard() {
                         <div className="col-span-3">
                             <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
                                 <div className="col-span-2">Course Title</div>
-                                <div>Semester</div>
-                                <div>Type</div>
                                 <div>Instructor</div>
                             </div>
-                            {course.map((list) => (
-                                <div key={list.name} className="grid grid-cols-5 py-3">
-                                    <div key={list.name} className="flex col-span-2 gap-3">
-                                        {list.name}
-                                    </div>
-                                    <div key={list.semester} className="flex gap-4">
-                                        {list.semester}
-                                    </div>
-                                    <div key={list.type} className="flex gap-3">
-                                        {list.type}
-                                    </div>
-                                    <div key={list.instructor} className="flex gap-3">
-                                        <Image src={list.course_url} width={24} height={24} alt={list.name} />
-                                        {list.instructor}
-                                    </div>
-                                </div>
+                            <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
+                            {data != [] && data.map((doc) => (
+                                <ListCourses doc={doc}/>
                             ))}
+                            </div>
                         </div>
 
                     </div>
