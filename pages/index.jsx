@@ -11,7 +11,7 @@ function Start() {
         {name: "Office Staff", code:4}
     ]
     const login = () =>{
-        router.push('./login')
+        router.push('./register/register')
     }
     return(
         <div className='flex'>
