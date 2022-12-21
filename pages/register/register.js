@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRef } from 'react';
 
 function register() {
+    const router = useRouter()
 
     const handlesubmit = useCallback((e) => {
         e.preventDefault()
