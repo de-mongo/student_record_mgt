@@ -48,7 +48,7 @@ function student_dashboard() {
                 <div>
                     <div className="grid grid-cols-2 gap-2">
                         {totalCourse.map((list) => (
-                            <div className="grid grid-cols-2 text-sm py-4 text-matty-600">
+                            <div key={list.type} className="grid grid-cols-2 text-sm py-4 text-matty-600">
                                 <div className="col-span-2">{list.type}</div>
                                 <h1 className={`text-4xl underline underline-offset-8 decoration-8 ${list.color} font-['Poppins'] font-semibold`}>{list.count}</h1>
                             </div>
