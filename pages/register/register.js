@@ -1,26 +1,30 @@
 import { useRouter } from 'next/router'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useFormState } from 'react-hook-form';
 import DatePicker from "react-datepicker";
 import { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
+import { useRef } from 'react';
 
 function register() {
     const router = useRouter()
-    function handleChechbox(e) { }
+
     const handlesubmit = useCallback((e) => {
         e.preventDefault()
-        const userid = document.querySelector('#userid').value
+        const fname = document.querySelector('#fname').value
+        const lname = document.querySelector('#lname').value
         const password = document.querySelector('#password').value
+
         fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({
-                "userId": userid,
-                "password": password
+                "fname": fname,
+                "lname": lname,
+                "pwd": password
             }),
         }).then((res) => {
-            if (res.ok) router.push('./FaceAuthentication/face')
+            if (res.ok) console.log("Register done")
         })
     })
     const [startDate, setStartDate] = useState(new Date());
@@ -35,20 +39,23 @@ function register() {
                 <div className='card-body flex flex-col'>
                     <form onSubmit={handlesubmit} >
                         <div className='formgroup flex flex-col'>
-                        <div>   
-                            <input type="text" id="fName" className='form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 mr-6 border-2 rounded-md' placeholder="First Name" required />
-                            <input type="text" id="lName" className='form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md' placeholder="Last Name" />
+                            <div>
+                                <input type="text" id="fName" className='form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 mr-6 border-2 rounded-md' placeholder="First Name" required />
+                                <input type="text" id="lName" className='form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md' placeholder="Last Name" />
 
-                        </div>
-                        <div>
-                            <input type="text" pattern='[1-9]{2}[A-Z]{4}[1-9]{2,3}' id="regNo" className="form-input uppercase box-content h-1 w-1/5 p-3 mr-6 placeholder-gray-800 placeholder-opacity-75 border-2  rounded-md" placeholder='Registration No.' maxLength="9" required />
-                            <input type="text" id="course" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md" placeholder='Course' required />
-                        </div>
+                            </div>
+                            <div>
+                                <input type="text" id="regNo" className="form-input uppercase box-content h-1 w-1/5 p-3 mr-6 placeholder-gray-800 placeholder-opacity-75 border-2  rounded-md" placeholder='Registration No.' maxLength="9" required />
+                                <input type="text" id="course" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md" placeholder='Course' required />
+                            </div>
                         </div>
                         <div className='formgroup flex flex-col'>
                             <input type="email" id="emailId" className='form-input box-content h-1 w-1/3 p-3 placeholder-gray-800 placeholder-opacity-75 border-2 rounded-md my-3' placeholder='Email Id' required />
                             <span className="block text-sm font-medium text-slate-700">Date of Birth</span>
                             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} type="text" id="dateOfBirth" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 rounded-md " required />
+                            <input type="text" id="semester" className='form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md' placeholder="Semester" />
+
+
                         </div>
                         <div className='formgroup my-3 flex flex-col'>
                             <input type="password" id="password" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/3 p-3 border-2 my-3  rounded-md" minLength="6" maxLength="20" placeholder='Password' required />
@@ -57,13 +64,13 @@ function register() {
                             {/* <input type="password" id="password" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md" minLength="6" maxLength="20" placeholder='CGPA' required /> */}
 
                         </div>
-                        
 
-                        
+
+
 
                         <button type="Submit" disabled={useFormState.isSubmitting} className='rounded-md bg-grey-600 w-1/3 border-solid border-b p-1 my-3 mx-20'>
                             {useFormState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                            Register                        
+                            Register
                         </button>
                     </form>
                 </div>
