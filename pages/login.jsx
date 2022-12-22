@@ -10,6 +10,7 @@ import axios from 'axios';
 function login() {
     const router = useRouter()
     const userType = ['Admin', 'Office Admin', 'Student', 'Faculty']
+    const role = ['admin', 'Office Admin', 'student', 'faculty']
     const [cookie, setCookie] = useCookies(["jwt"])
 
     // function handleChechbox(e) {}
@@ -19,15 +20,26 @@ function login() {
         const password = document.querySelector('#password').value
         console.log(process.env.PORT)
 
-        let res = await axios.post(`http://localhost:4000/api/v1/auth/login`, {
-            email: userid,
-            password: password,
-            userDb: router.query.search
-        }, { withCredentials: true })
+        let res;
+
+        if (router.query.search == 0) {
+            res = await axios.post(`http://localhost:4000/api/v1/admin/auth/login`, {
+                email: userid,
+                password: password,
+                role: role[router.query.search]
+            }, { withCredentials: true })
+        } else {
+            res = await axios.post(`http://localhost:4000/api/v1/auth/login`, {
+                email: userid,
+                password: password,
+                role: role[router.query.search]
+            }, { withCredentials: true })
+
+        }
 
         console.log(res)
         if (res.statusText === "OK"){
-            if(router.query.search == 2)
+            if(router.query.search != 0)
                 router.push('./FaceAuthentication/face')
             else
                 router.push('./dashboard/admin')

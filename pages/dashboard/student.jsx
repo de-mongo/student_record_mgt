@@ -59,8 +59,9 @@ function student_dashboard() {
                             <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
                                 <div className="col-span-2">Course Title</div>
                                 <div>Instructor</div>
+                                <div>Department</div>
                             </div>
-                            <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
+                            <div className="grid grid-cols-5 gap-2  py-4 text-matty-600">
                             {data != [] && data.map((doc) => (
                                 <ListCourses doc={doc}/>
                             ))}

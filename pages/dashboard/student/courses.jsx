@@ -81,6 +81,7 @@ export default function() {
                             <div className="grid grid-cols-5 text-sm text-matty-600">
                                 <div className="col-span-2">Course Title</div>
                                 <div>Instructor</div>
+                                <div>Department</div>
                             </div>
                             {data.docs && data.docs.filter(doc => (enrolled.includes(doc._id))).map((doc) => (
                                 <div key={doc._id} className="grid grid-cols-5 py-3">
@@ -98,6 +99,7 @@ export default function() {
                             <div className="grid grid-cols-5 text-sm text-matty-600">
                                 <div className="col-span-2">Course Title</div>
                                 <div>Instructor</div>
+                                <div>Department</div>
                             </div>
                             {data.docs && data.docs.filter(doc => (!enrolled.includes(doc._id))).map((doc) => (
                                 <div key={doc._id} className="grid grid-cols-5 py-3 items-center">
