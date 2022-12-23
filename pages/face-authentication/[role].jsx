@@ -3,9 +3,11 @@ import { useCallback } from 'react'
 import { useFormState } from 'react-hook-form';
 import { useState, useRef, useEffect } from "react";
 
-function face(){
+export default function Face(){
     const router = useRouter()
       // let navigate = useNavigate();
+
+    const {role} = router.query;
 
     const handlesubmit = useCallback((e) => {
         // e.preventDefault()
@@ -20,7 +22,7 @@ function face(){
         }).then((res)=> {
             if (res.ok){
               console.log("image-done");
-             router.push('../dashboard/student') // navigate("../dashboard/student"); 
+             router.push(`../dashboard/${role}`) // navigate("../dashboard/student"); 
             }
         })
     })
@@ -119,5 +121,3 @@ function face(){
         </div>
     )
 }
-
-export default face

@@ -1,4 +1,4 @@
-export default function({display = false, setDisplay, children}) {
+export default function Modal({display = false, setDisplay, children}) {
     return (
         <>
         {display && (

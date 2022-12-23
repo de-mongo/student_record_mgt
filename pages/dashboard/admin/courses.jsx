@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Modal from '../../../components/Modal';
 import { useEffect, useState } from 'react';
 
-export default function() {
+export default function Courses() {
     // const router = useRouter()
     let active = "Courses"
     let links = [
@@ -17,7 +17,7 @@ export default function() {
     const [data, setData] = useState({})
 
     async function fetchMyCourses() {
-        let res = await axios.get(`http://localhost:4000/api/v1/courses`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses`, {withCredentials: true})
         setData(res.data)
     }
 

@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export default function({active, links}) { 
+export default function SideNav({active, links}) { 
     // let active = "Users"
     // let links = [
     //     {name: "Users", icon: "assignment_ind", link: "#"},

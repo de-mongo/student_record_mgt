@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-export default function() {
+export default function FMyCourses() {
     // const router = useRouter()
 
     let active = "My Courses"
@@ -18,7 +18,7 @@ export default function() {
     const [data, setData] = useState({})
     // const [enrolled, setEnrolled] = useState([])
     async function fetchMyCourses() {
-        let res = await axios.get(`http://localhost:4000/api/v1/courses/me`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/me`, {withCredentials: true})
         // console.log(res)
         setData(res.data)
     }
