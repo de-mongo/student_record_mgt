@@ -6,7 +6,7 @@ import Head from 'next/head';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default function() {
+export default function SAllCourses() {
     // const router = useRouter()
     let active = "Courses"
     let links = [
@@ -17,13 +17,13 @@ export default function() {
     const [data, setData] = useState({})
     const [enrolled, setEnrolled] = useState([])
     async function fetchCourses() {
-        let res = await axios.get(`http://localhost:4000/api/v1/courses?page=${page}`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses?page=${page}`, {withCredentials: true})
         // console.log(res)
         setData(res.data)
     }
 
     async function fetchMyCourses() {
-        let res = await axios.get(`http://localhost:4000/api/v1/courses/me?nopopulate=true`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/me?nopopulate=true`, {withCredentials: true})
         // console.log(res)
         setEnrolled(res.data)
     }
@@ -34,7 +34,7 @@ export default function() {
     }, [page])
 
     async function enrollCourse(id) {
-        let res = await axios.post(`http://localhost:4000/api/v1/courses/enroll`, {courseId: id}, {withCredentials: true})
+        let res = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/enroll`, {courseId: id}, {withCredentials: true})
         console.log(res)
         if (res.statusText == "OK") {
             console.log(res.statusText)

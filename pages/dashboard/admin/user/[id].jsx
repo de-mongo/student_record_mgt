@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Modal from "../../../../components/Modal";
-export default function () {
+export default function UserId() {
     const router = useRouter()
     const { id } = router.query;
 
@@ -18,7 +18,7 @@ export default function () {
 
     const [data, setData] = useState();
     async function fetchUsers(id) {
-        let res = await axios.get(`http://localhost:4000/api/v1/admin/user/${id}`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/user/${id}`, {withCredentials: true})
 
         setData(res.data)
         console.log(res.data)
@@ -31,7 +31,7 @@ export default function () {
     }, [id]) 
 
     async function handleDelete(id) {
-        let res = await axios.delete(`http://localhost:4000/api/v1/admin/user/${id}`, {withCredentials: true})
+        let res = await axios.delete(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/user/${id}`, {withCredentials: true})
         router.push("/dashboard/admin")
         // setData(res.data)
         // console.log(res.data)
@@ -46,20 +46,15 @@ export default function () {
                 <title>Admin Dashboard - user:{data && (data.name || `${data.first_name} ${data.last_name}`)}</title>
             </Head>
             <Modal display={displayDel} setDisplay={setDisplayDel} >
-                <div className="relative bg-white p-12 rounded-lg shadow-lg">
-                    <button className="absolute right-2 top-1" onClick={() => {setDisplayDel(!displayDel)}}>
-                        <span className="material-symbols-rounded">close</span>
-                    </button>
-                    <div className="flex flex-col items-center gap-3">
-                        <div>
-                            Do you want to Delete this record
-                        </div>
-                        <div className="flex gap-4">
-                            <button className="py-2 px-4">Cancel</button>
-                            <button className="py-2 px-4 rounded-full bg-red-600 text-white" onClick={() => handleDelete(id)}>
-                                Delete
-                            </button>
-                        </div>
+                <div className="flex flex-col items-center gap-3">
+                    <div>
+                        Do you want to Delete this record
+                    </div>
+                    <div className="flex gap-4">
+                        <button className="py-2 px-4">Cancel</button>
+                        <button className="py-2 px-4 rounded-full bg-red-600 text-white" onClick={() => handleDelete(id)}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             </Modal>

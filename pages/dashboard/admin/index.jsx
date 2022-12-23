@@ -8,7 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 
-export default function() {
+export default function Users() {
     const name = "Stuart Richards";
     let active = "Users"
     let links = [
@@ -21,7 +21,7 @@ export default function() {
     const [data, setData] = useState({});
 
     async function fetchUsers() {
-        let res = await axios.get(`http://localhost:4000/api/v1/admin/users?page=${page}&role=${role}`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/users?page=${page}&role=${role}`, {withCredentials: true})
 
         setData(res.data)
         console.log(res.data)

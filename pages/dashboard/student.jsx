@@ -8,12 +8,12 @@ import Head from 'next/head';
 import Image from 'next/image'
 import ListCourses from '../../components/ListCourses';
 
-function student_dashboard() {
+export default function StudentDashboard() {
     // const router = useRouter()
     const name = "vivek kumar";
     const [data, setData] = useState([])
     async function fetchMyCourses() {
-        let res = await axios.get(`http://localhost:4000/api/v1/courses/me`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/me`, {withCredentials: true})
         // console.log(res)
         setData(res.data)
     }
@@ -63,7 +63,7 @@ function student_dashboard() {
                             </div>
                             <div className="grid grid-cols-5 gap-2  py-4 text-matty-600">
                             {data != [] && data.map((doc) => (
-                                <ListCourses doc={doc}/>
+                                <ListCourses doc={doc} key={doc._id}/>
                             ))}
                             </div>
                         </div>
@@ -76,4 +76,4 @@ function student_dashboard() {
 
     )
 }
-export default student_dashboard
+

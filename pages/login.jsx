@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation'
 import axios from 'axios';
 
 
-function login() {
+export default function Login() {
     const router = useRouter()
     const userType = ['Admin', 'Office Admin', 'Student', 'Faculty']
     const role = ['admin', 'Office Admin', 'student', 'faculty']
@@ -23,13 +23,13 @@ function login() {
         let res;
 
         if (router.query.search == 0) {
-            res = await axios.post(`http://localhost:4000/api/v1/admin/auth/login`, {
+            res = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/auth/login`, {
                 email: userid,
                 password: password,
                 role: role[router.query.search]
             }, { withCredentials: true })
         } else {
-            res = await axios.post(`http://localhost:4000/api/v1/auth/login`, {
+            res = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/auth/login`, {
                 email: userid,
                 password: password,
                 role: role[router.query.search]
@@ -40,7 +40,7 @@ function login() {
         console.log(res)
         if (res.statusText === "OK"){
             if(router.query.search != 0)
-                router.push('./FaceAuthentication/face')
+                router.push(`./face-authentication/${role[router.query.search]}`)
             else
                 router.push('./dashboard/admin')
         } 
@@ -102,5 +102,3 @@ function login() {
         </div>
     )
 }
-
-export default login

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Modal from "../../../../components/Modal";
-export default function () {
+export default function FCourseId() {
     const router = useRouter()
     const { id } = router.query;
 
@@ -17,7 +17,7 @@ export default function () {
 
     const [data, setData] = useState();
     async function fetchUsers(id) {
-        let res = await axios.get(`http://localhost:4000/api/v1/course/${id}`, {withCredentials: true})
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/course/${id}`, {withCredentials: true})
 
         setData(res.data)
         console.log(res.data)
@@ -30,7 +30,7 @@ export default function () {
     }, [id]) 
 
     async function handleDelete(id) {
-        let res = await axios.delete(`http://localhost:4000/api/v1/courses/${id}`, {withCredentials: true})
+        let res = await axios.delete(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/${id}`, {withCredentials: true})
         router.push("/dashboard/admin/courses")
         // setData(res.data)
         // console.log(res.data)

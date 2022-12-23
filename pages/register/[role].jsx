@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import faculty from '../dashboard/faculty';
 
-function register() {
+export default function Register() {
     const router = useRouter()
 
     const {role} = router.query;
@@ -48,7 +48,7 @@ function register() {
         console.log(post)
 
         let res = await axios.post(
-            'http://localhost:4000/api/v1/admin/user/new', 
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/user/new`, 
             post, 
             {withCredentials: true}
         )
@@ -109,5 +109,3 @@ function register() {
         </div>
     )
 }
-
-export default register

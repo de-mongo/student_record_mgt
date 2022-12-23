@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function({doc}) {
+export default function ListCourses({doc}) {
     return (
         <>
             <div className="flex col-span-2 gap-3">
