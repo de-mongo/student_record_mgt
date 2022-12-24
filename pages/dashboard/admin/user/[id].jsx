@@ -13,7 +13,8 @@ export default function UserId() {
     let active = ""
     let links = [
         {name: "Users", icon: "assignment_ind", link: "/dashboard/admin"},
-        {name: "Courses", icon: "book", link: "/dashboard/admin/courses"}
+        {name: "Courses", icon: "book", link: "/dashboard/admin/courses"},
+        {name: "Dept", icon: "corporate_fare", link: "/dashboard/admin/depts"},
     ]
 
     const [data, setData] = useState();

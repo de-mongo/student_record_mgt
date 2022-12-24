@@ -11,9 +11,11 @@ import { useEffect } from "react";
 export default function Users() {
     const name = "Stuart Richards";
     let active = "Users"
+
     let links = [
         {name: "Users", icon: "assignment_ind", link: "/dashboard/admin"},
-        {name: "Courses", icon: "book", link: "/dashboard/admin/courses"}
+        {name: "Courses", icon: "book", link: "/dashboard/admin/courses"},
+        {name: "Dept", icon: "corporate_fare", link: "/dashboard/admin/depts"},
     ]
 
     const [page, setPage] = useState(1);
@@ -77,13 +79,14 @@ export default function Users() {
                         role === "student" ?
                         (
                             <div className="col-span-2">
-                                <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
+                                <div className="grid grid-cols-6 text-sm py-4 text-matty-600">
                                     <div className="col-span-3">Name</div>
                                     <div className="">Semester</div>
                                     <div className="">Course</div>
+                                    <div className="">Department</div>
                                 </div>
                             {data.docs && data.docs.map((doc, index) => (
-                                <Link href={`/dashboard/admin/user/${doc._id}`} key={doc._id} className="grid grid-cols-5 py-3 group">
+                                <Link href={`/dashboard/admin/user/${doc._id}`} key={doc._id} className="grid grid-cols-6 py-3 group">
                                     <div className="flex col-span-3 gap-3 items-center">
                                         {/* <Image src={list.profile_url} width={24} height={24} alt={list.name}/> */}
                                         {doc.name || doc.first_name + " " + doc.last_name}
@@ -93,18 +96,9 @@ export default function Users() {
                                     </div>
                                     <div className="flex gap-3 items-center">
                                         {doc.degree}
-                                        {/* <div className="hidden group-hover:flex items-center">
-                                            <button className="flex items-center" onClick={() => (handleHover(index))}>
-                                                <span class="material-symbols-rounded px-2 rounded-full" >
-                                                    edit
-                                                </span>
-                                            </button>
-                                            <button className="flex items-center" onClick={() => (handleDelete(doc._id))}>
-                                                <span class="material-symbols-rounded px-2 rounded-full" >
-                                                    delete
-                                                </span>
-                                            </button>
-                                        </div> */}
+                                    </div>
+                                    <div className="flex gap-3 items-center">
+                                        {doc.dept_id.name}
                                     </div>
                                 </Link>
                             ))}
@@ -116,6 +110,7 @@ export default function Users() {
                                 <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
                                     <div className="col-span-2">Name</div>
                                     <div className="col-span-2">Email</div>
+                                    <div className="col-span-1">Department</div>
                                 </div>
                             {data.docs && data.docs.map((doc, index) => (
                                 <Link href={`/dashboard/admin/user/${doc._id}`} key={doc._id} className="grid grid-cols-5 py-3 group">
@@ -125,6 +120,9 @@ export default function Users() {
                                     </div>
                                     <div className="flex col-span-2 gap-3 items-center">
                                         {doc.email}
+                                    </div>
+                                    <div className="flex gap-3 items-center">
+                                        {doc.dept_id.name}
                                     </div>
                                 </Link>
                             ))}

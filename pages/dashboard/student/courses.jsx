@@ -36,7 +36,7 @@ export default function SAllCourses() {
     async function enrollCourse(id) {
         let res = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/enroll`, {courseId: id}, {withCredentials: true})
         console.log(res)
-        if (res.statusText == "OK") {
+        if (res.status == 200) {
             console.log(res.statusText)
             setPage(1)
             fetchCourses()
