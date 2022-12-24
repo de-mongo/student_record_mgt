@@ -12,7 +12,7 @@ export default function Face(){
     const handlesubmit = useCallback((e) => {
         // e.preventDefault()
         // let data = document.querySelector('#img-data').value
-        fetch('http://localhost:3000/api/hello/', {
+        fetch(`/api/hello/`, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {'Content-type': 'application/img'},

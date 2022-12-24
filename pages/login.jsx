@@ -38,7 +38,7 @@ export default function Login() {
         }
 
         console.log(res)
-        if (res.statusText === "OK"){
+        if (res.status == 200){
             if(router.query.search != 0)
                 router.push(`./face-authentication/${role[router.query.search]}`)
             else

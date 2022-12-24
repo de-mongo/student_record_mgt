@@ -5,12 +5,16 @@ import DatePicker from "react-datepicker";
 import { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-import faculty from '../dashboard/faculty';
+// import faculty from '../dashboard/faculty';
 
 export default function Register() {
     const router = useRouter()
 
     const {role} = router.query;
+    const [startDate, setStartDate] = useState(new Date());
+    const [deptname, setDeptname] = useState("");
+    const [deptList, setDeptList] = useState();
+    const [deptChoice, setDeptChoice] = useState();
 
     const handlesubmit = useCallback(async (e) => {
         e.preventDefault()
@@ -38,6 +42,7 @@ export default function Register() {
             "date_of_birth": dateOfBirth,
             "degree": Course,
             "sem": semester,
+            "dept_id": deptChoice,
         }
 
         if (role === "faculty") {
@@ -54,11 +59,18 @@ export default function Register() {
         )
         console.log(res)
 
-        if (res.statusText == "Created") {router.push("/dashboard/admin/")}
+        if (res.status == 201) {router.push("/dashboard/admin/")}
 
     })
-    const [startDate, setStartDate] = useState(new Date());
 
+    async function handleDeptSubmit(e) {
+        e.preventDefault();
+        let res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/dept/search?name=${deptname}`, 
+            {withCredentials: true}
+        )
+        setDeptList(res.data)
+    }
     return (
         <div className='h-screen flex flex-col item-center justify-start'>
             <div className="flex-col w-full mx-60 card mt-5">
@@ -67,6 +79,30 @@ export default function Register() {
                     <h4 className='text-xl mb-6'>Enter required information</h4>
                 </div>
                 <div className='card-body flex flex-col'>
+                    <div>
+                        <form onSubmit={handleDeptSubmit}>
+                            <div className="flex items-center gap-4">
+                                <label htmlFor="instr">Department Name</label>
+                                <input type="text" name="dept" 
+                                    className="border-[1px] border-matty-300/80 rounded-full px-4 py-2" 
+                                    placeholder="Department name" 
+                                    onChange={(e) => {setDeptname(e.target.value)}} 
+                                    value={deptname}
+                                />
+                                <button className="bg-blue-600 rounded-full text-white py-2 px-4">Search</button>
+                            </div>
+                        </form>
+                        <div className="pt-0">
+                            <div className="text-lg font-medium font-['Poppins'] py-4 scroll-auto">Deptartment List</div>
+                            {deptList && deptList.docs.map(doc => (
+                                <div key={doc._id} onClick={() => setDeptChoice(doc._id)} 
+                                    className={(deptChoice == doc._id ? `bg-blue-100 text-blue-900 p-2 rounded-xl cursor-pointer` : `p-2 cursor-pointer`)}
+                                >
+                                    <span>{doc.name || doc.dept_name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                     <form onSubmit={handlesubmit} >
                         <div className='formgroup flex flex-col'>
                             <div>
@@ -86,6 +122,7 @@ export default function Register() {
                             <input type="email" id="emailId" className='form-input box-content h-1 w-1/3 p-3 placeholder-gray-800 placeholder-opacity-75 border-2 rounded-md my-3' placeholder='Email Id' required />
                             <span className="block text-sm font-medium text-slate-700">Date of Birth</span>
                             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} type="text" id="dateOfBirth" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 rounded-md " required />
+
                             {
                                 role !== "faculty" && 
                                 <input type="text" id="semester" className='form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md' placeholder="Semester" required/>
@@ -98,7 +135,6 @@ export default function Register() {
                             {/* <input type="password" id="password" className="form-input box-content placeholder-gray-800 placeholder-opacity-75 h-1 w-1/5 p-3 border-2 my-3 rounded-md" minLength="6" maxLength="20" placeholder='CGPA' required /> */}
 
                         </div>
-
                         <button type="Submit" disabled={useFormState.isSubmitting} className='rounded-md bg-grey-600 w-1/3 border-solid border-b p-1 my-3 mx-20'>
                             {useFormState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                             Register
