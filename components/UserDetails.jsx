@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Modal from "./Modal";
 
-export default function UserDetails({data, setData, updateData, setUpdateData, updateUser}) {
+export default function UserDetails({data, setData, updateData, setUpdateData, updateUser, displayEdit, setDisplayEdit}) {
 
-    const [displayEdit, setDisplayEdit] = useState(false);
     return (
         <>
             <div className="fixed"> 

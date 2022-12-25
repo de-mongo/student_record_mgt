@@ -31,8 +31,11 @@ export default function UserId() {
         }
     }, [id]) 
 
-    async function handleDelete(id) {
-        let res = await axios.delete(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/user/${id}`, {withCredentials: true})
+    async function handleDelete(id, dept_id) {
+        let res = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/admin/user/${id}`, 
+            {_id: id, dept_id: dept_id}, 
+            {withCredentials: true})
         router.push("/dashboard/admin")
         // setData(res.data)
         // console.log(res.data)
@@ -53,7 +56,7 @@ export default function UserId() {
                     </div>
                     <div className="flex gap-4">
                         <button className="py-2 px-4">Cancel</button>
-                        <button className="py-2 px-4 rounded-full bg-red-600 text-white" onClick={() => handleDelete(id)}>
+                        <button className="py-2 px-4 rounded-full bg-red-600 text-white" onClick={() => handleDelete(id, data.dept_id._id)}>
                             Delete
                         </button>
                     </div>
