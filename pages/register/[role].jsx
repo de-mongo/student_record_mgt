@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
+import Head from 'next/head';
 // import faculty from '../dashboard/faculty';
 
 export default function Register() {
@@ -73,6 +74,9 @@ export default function Register() {
     }
     return (
         <div className='h-screen flex flex-col item-center justify-start'>
+            <Head> 
+                <title>Create new {role} user </title> 
+            </Head>
             <div className="flex-col w-full mx-60 card mt-5">
                 <div className="card-header my-2 ">
                     <h1 className='text-4xl'>Registration</h1>

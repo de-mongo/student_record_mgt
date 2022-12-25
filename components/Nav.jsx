@@ -1,13 +1,42 @@
+import axios from "axios";
 import Image from "next/image";
 import Link from 'next/link';
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useState } from "react";
+import { useCookies } from 'react-cookie';
 
 export default function Nav() {
     const [options, setOptions] = useState(false);
-    const user = {
-        name: "Stuart",
-        profile_url: `https://api.multiavatar.com/stuartrichard.svg`,
+    const [cookie] = useCookies(['user'])
+    console.log(cookie.user)
+
+    const router = useRouter();
+
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        if (cookie.user != undefined) {
+            let splitCookie = cookie.user.split("-")
+            setUser({
+                name: splitCookie[0],
+                profile_url: `https://api.multiavatar.com/${splitCookie[0]}.svg`,
+                role: splitCookie[1] 
+            })
+        }
+    }, [cookie])
+
+    async function logout() {
+        let res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/auth/logout`, 
+            {withCredentials: true}
+        )
+
+        if (res.status == 200) {
+            router.push("/")
+        }
     }
+
     return (
         <nav className="flex p-4 px-6 pl-28 text-matty-900 w-screen items-center">
             <div className="flex flex-1 items-center">
@@ -37,15 +66,19 @@ export default function Nav() {
                 <button className="flex items-center">
                     <span className="material-symbols-rounded"> notifications </span>
                 </button>
-                <Image src={user.profile_url} width={24} height={24} alt={user.name}/>
+                {user && (
+                    <Image src={user.profile_url} width={24} height={24} alt={user.name}/>
+                )}
                 <div className="relative flex items-center font-['Poppins'] font-medium">
                     <button className="flex items-center" onClick={() => setOptions(!options)}>
-                        {user.name}
+                        {user && (
+                                user.name
+                        )}
                         <span className="material-symbols-rounded"> arrow_drop_down </span>
                     </button>
                     {options && (
                         <div className="flex flex-col gap-4 absolute top-8 px-6 p-4 w-52 right-0 bg-white rounded-lg border-2 border-matty-100" onMouseLeave={() => setOptions(false)}>
-                            <Link href="#" className="flex items-center gap-2 font-['Poppins'] text-sm font-normal">
+                            <Link href={`/dashboard/${user.role}/me`} className="flex items-center gap-2 font-['Poppins'] text-sm font-normal">
                                 <span className="material-symbols-rounded">
                                     face_5
                                 </span>
@@ -58,12 +91,12 @@ export default function Nav() {
                                 Settings
                             </Link>
                             <hr className="bg-matty-100"/>
-                            <Link href="/" className="flex items-center gap-2 font-['Poppins'] text-sm font-normal text-red-500">
+                            <button onClick={logout} className="flex items-center gap-2 font-['Poppins'] text-sm font-normal text-red-500">
                                 <span className="material-symbols-rounded">
                                     logout
                                 </span>
                                 Sign out
-                            </Link>
+                            </button>
                         </div>
                     )}
                     

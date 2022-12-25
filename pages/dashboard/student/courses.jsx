@@ -61,7 +61,7 @@ export default function SAllCourses() {
     return (
         <div>
             <Head>
-                <title>Student Dashboard</title>
+                <title>Student Dashboard - Courses</title>
             </Head>
             <div className="fixed">
                 <SideNav active={active} links={links}/>

@@ -35,7 +35,7 @@ export default function StudentDashboard() {
     return (
         <div>
             <Head>
-                <title>Student Dashboard</title>
+                <title>Student Dashboard - Home</title>
             </Head>
             <div className="fixed">
                 <SideNav links={links} active={active} />
@@ -44,21 +44,21 @@ export default function StudentDashboard() {
                 <Nav />
             </div>
             <div className="pl-28 tracking-wide px-8 pt-36 text-matty-900">
-                <h1 className="font-['Poppins'] text-3xl font-medium mb-4">Hello, {name}</h1>
+                {/* <h1 className="font-['Poppins'] text-3xl font-medium mb-4">Hello, {name}</h1> */}
                 <div>
-                    <div className="grid grid-cols-2 gap-2">
+                    {/* <div className="grid grid-cols-2 gap-2">
                         {totalCourse.map((list) => (
                             <div key={list.type} className="grid grid-cols-2 text-sm py-4 text-matty-600">
                                 <div className="col-span-2">{list.type}</div>
                                 <h1 className={`text-4xl underline underline-offset-8 decoration-8 ${list.color} font-['Poppins'] font-semibold`}>{list.count}</h1>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                     <div className="grid grid-cols-5 gap-4">
                         <div className="col-span-3">
                             <div className="grid grid-cols-5 text-sm py-4 text-matty-600">
                                 <div className="col-span-2">Course Title</div>
-                                <div>Instructor</div>
+                                <div className="col-span-2">Instructor</div>
                                 <div>Department</div>
                             </div>
                             <div className="grid grid-cols-5 gap-2  py-4 text-matty-600">
