@@ -3,7 +3,7 @@ import Head from "next/head";
 import SideNav from "../../../../components/SideNav";
 import axios from 'axios';
 import Router, { useRouter } from 'next/router'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function NewCourse() {
     let active = "Users"
@@ -18,21 +18,9 @@ export default function NewCourse() {
 
     const [name, setName] = useState("");
 
-    const [instrname, setInstrname] = useState("");
-    const [instrList, setInstrList] = useState();
+    // const [deptname, setDeptname] = useState("");
+    // const [deptList, ssetDeptList] = useState();
     const [instrChoice, setInstrChoice] = useState();
-
-    async function handleInstructorSubmit(e) {
-        e.preventDefault();
-        let res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/users/search-instructor?name=${instrname}`, 
-            {withCredentials: true}
-        )
-        setInstrList(res.data)
-    }
-
-    const [deptname, setDeptname] = useState("");
-    const [deptList, setDeptList] = useState();
     const [deptChoice, setDeptChoice] = useState();
 
     const [itemList, setItemList] = useState([
@@ -41,14 +29,26 @@ export default function NewCourse() {
         // {course: "M.Tech", sem: 3},
     ]);
 
-    async function handleDeptSubmit(e) {
-        e.preventDefault();
-        let res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/dept/search?name=${deptname}`, 
-            {withCredentials: true}
-        )
-        setDeptList(res.data)
+    async function getUserDetails() {
+        let res = await axios.get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/users/me`, {withCredentials: true})
+        if (res.status == 200) {
+            setInstrChoice(res.data._id)
+            setDeptChoice(res.data.dept_id._id)
+        }
     }
+
+    useEffect(() => {
+        getUserDetails()
+    }, []) 
+
+    // async function handleDeptSubmit(e) {
+    //     e.preventDefault();
+    //     let res = await axios.get(
+    //         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/dept/search?name=${deptname}`, 
+    //         {withCredentials: true}
+    //     )
+    //     setDeptList(res.data)
+    // }
 
     function addNewTaken() {
         setItemList([{course: "", sem: ""}, ...itemList])
@@ -84,7 +84,7 @@ export default function NewCourse() {
             {withCredentials: true}
         )
 
-        if (res.status == 201) router.push("/dashboard/admin/courses")
+        if (res.status == 201) router.push("/dashboard/faculty")
     }
 
     return (
@@ -105,32 +105,7 @@ export default function NewCourse() {
                         value={name}
                     />
                 </div>
-                <hr className="py-2" />
-                <div>
-                    <form onSubmit={handleInstructorSubmit}>
-                        <div className="flex items-center gap-4">
-                            <label htmlFor="instr">Instructor Name</label>
-                            <input type="text" name="instr" 
-                                className="border-[1px] border-matty-300/80 rounded-full px-4 py-2" 
-                                placeholder="Instructor name" 
-                                onChange={(e) => {setInstrname(e.target.value)}} 
-                                value={instrname}
-                            />
-                            <button className="bg-blue-600 rounded-full text-white py-2 px-4">Search</button>
-                        </div>
-                    </form>
-                    <div className="pt-0">
-                        <div className="text-lg font-medium font-['Poppins'] py-4 scroll-auto">Instructor List</div>
-                        {instrList && instrList.docs.map(doc => (
-                            <div key={doc._id} onClick={() => setInstrChoice(doc._id)} 
-                                className={(instrChoice == doc._id ? `bg-blue-100 text-blue-900 p-2 rounded-xl cursor-pointer` : `p-2 cursor-pointer`)}
-                            >
-                                <span>{doc.name || `${doc.first_name} ${doc.last_name}`}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <hr className="py-2" />
+                {/* <hr className="py-2" />
                 <div>
                     <form onSubmit={handleDeptSubmit}>
                         <div className="flex items-center gap-4">
@@ -154,7 +129,7 @@ export default function NewCourse() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
                 <hr className="py-2" />
                 <div>
                     <div className="text-lg font-medium font-['Poppins'] py-4 scroll-auto">TakenBy List</div>

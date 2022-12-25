@@ -1,5 +1,4 @@
 import Nav from "../../../components/Nav";
-import Image from "next/image";
 import Head from "next/head";
 import SideNav from "../../../components/SideNav";
 import TotalUsers from "../../../components/TotalUsers";
@@ -54,12 +53,12 @@ export default function Users() {
     return (
         <>
             <Head>
-                <title>Admin Dashboard</title>
+                <title>Admin Dashboard - Users</title>
             </Head>
             <div className="fixed"> <SideNav links={links} active={active} /> </div>
             <div className="fixed"> <Nav/> </div>
             <div className="pl-28 tracking-wide px-8 pt-36 text-matty-900">
-                <h1 className="font-['Poppins'] text-3xl font-medium mb-4">Good morning, {name}</h1>
+                {/* <h1 className="font-['Poppins'] text-3xl font-medium mb-4">Good morning, {name}</h1> */}
                 <div className="flex gap-4 py-4">
                     <label htmlFor="student" className="flex gap-1 items-center">
                         <input onChange={handleRadio} checked={role == "student"} type="radio" name="role" value="student" id="student" /> 
@@ -129,9 +128,9 @@ export default function Users() {
                             </div>
                         )
                     }
-                    <div>
+                    {/* <div>
                         <TotalUsers />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

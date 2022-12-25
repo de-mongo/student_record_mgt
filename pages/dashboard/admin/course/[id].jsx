@@ -45,7 +45,7 @@ export default function CourseId() {
     return (
         <>
             <Head>
-                <title>Admin Dashboard - user:{data && (data.name || `${data.first_name} ${data.last_name}`)}</title>
+                <title>Admin Dashboard - course:{data && (data.name)}</title>
             </Head>
             <Modal display={displayDel} setDisplay={setDisplayDel} >
                 <div className="flex flex-col items-center gap-3">

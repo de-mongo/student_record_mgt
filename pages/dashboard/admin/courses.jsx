@@ -46,7 +46,7 @@ export default function Courses() {
     return (
         <div>
             <Head>
-                <title>Student Dashboard</title>
+                <title>Admin Dashboard - Courses</title>
             </Head>
             <div className="fixed">
                 <SideNav active={active} links={links}/>

@@ -61,6 +61,10 @@ export default function FMyCourses() {
                 <div>
                     <div className="grid grid-cols-5 gap-4">
                         <div className="col-span-3">
+                            <Link href={"/dashboard/faculty/course/new"} className="mb-8 gap-2 flex items-center justify-center px-4 py-2 rounded-full bg-blue-600 text-matty-50" >
+                                <span className="material-symbols-rounded">add</span>
+                                Create New Course
+                            </Link>
                             <div className="grid grid-cols-5 text-sm text-matty-600">
                                 <div className="col-span-2">Course Title</div>
                                 <div>Department</div>

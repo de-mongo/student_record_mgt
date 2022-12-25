@@ -84,7 +84,7 @@ export default function Users() {
     return (
         <>
             <Head>
-                <title>Admin Dashboard</title>
+                <title>Admin Dashboard - Departments</title>
             </Head>
             <div className="fixed"> <SideNav links={links} active={active} /> </div>
             <div className="fixed"> <Nav/> </div>

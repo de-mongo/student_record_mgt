@@ -89,6 +89,7 @@ export default function UserId() {
                             <div>{data.street_address}</div>
                             <div>Date Of Birth</div>
                             <div>{data.date_of_birth}</div>
+                            <div>Department</div> <div>{data.dept_id.name}</div>
                             {(data.role !== "faculty" && 
                             <>
                             <div>Registration No</div>
