@@ -28,6 +28,7 @@ export default function UserId() {
             email: res.data.email,
             street_address: res.data.street_address,
             date_of_birth: res.data.date_of_birth,
+            dept_id: res.data.dept_id._id
         }
         setData(res.data)
         setUpdateData(updatable)
@@ -39,6 +40,7 @@ export default function UserId() {
 
     console.log(updateData);
 
+    const [displayEdit, setDisplayEdit] = useState(false);
     async function updateUser() {
         let res = await axios.put(
             `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/users/me`, 
@@ -67,6 +69,8 @@ export default function UserId() {
                 setUpdateData={setUpdateData} 
                 updateUser={updateUser} 
                 fetchUsers={fetchUsers}
+                displayEdit={displayEdit}
+                setDisplayEdit={setDisplayEdit}
             />
         </>
     )

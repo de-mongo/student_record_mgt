@@ -33,8 +33,8 @@ export default function SAllCourses() {
         fetchMyCourses()
     }, [page])
 
-    async function enrollCourse(id) {
-        let res = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/enroll`, {courseId: id}, {withCredentials: true})
+    async function enrollCourse(id, dept_id) {
+        let res = await axios.post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/v1/courses/enroll`, {courseId: id, dept_id: dept_id}, {withCredentials: true})
         console.log(res)
         if (res.status == 200) {
             console.log(res.statusText)
@@ -57,6 +57,8 @@ export default function SAllCourses() {
             console.log(data)
         }
     }
+
+    console.log(data)
 
     return (
         <div>
@@ -105,7 +107,7 @@ export default function SAllCourses() {
                                 <div key={doc._id} className="grid grid-cols-5 py-3 items-center">
                                     <ListCourses doc={doc} />
                                     <div className="flex">
-                                        <button onClick={() => (enrollCourse(doc._id))} className="py-2 px-4 bg-blue-600 rounded-full text-matty-50">enroll</button>
+                                        <button onClick={() => (enrollCourse(doc._id, doc.deptid._id))} className="py-2 px-4 bg-blue-600 rounded-full text-matty-50">enroll</button>
                                     </div>
                                 </div>
                             ))}
@@ -114,7 +116,6 @@ export default function SAllCourses() {
                     </div>
                 </div>
             </div>
-
         </div>
 
     )

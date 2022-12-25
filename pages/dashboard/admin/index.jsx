@@ -97,7 +97,7 @@ export default function Users() {
                                         {doc.degree}
                                     </div>
                                     <div className="flex gap-3 items-center">
-                                        {doc.dept_id.name}
+                                        {doc.dept_id && doc.dept_id.name}
                                     </div>
                                 </Link>
                             ))}

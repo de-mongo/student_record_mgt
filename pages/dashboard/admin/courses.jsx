@@ -42,6 +42,7 @@ export default function Courses() {
 
     // const [display, setDisplay] = useState(true);
 
+    console.log(data)
 
     return (
         <div>
@@ -81,7 +82,7 @@ export default function Courses() {
                             {data.docs && data.docs.map((doc) => (
                                 <Link href={`/dashboard/admin/course/${doc._id}`} key={doc._id} className="grid grid-cols-5 py-3">
                                     <div className='col-span-2'>{doc.name}</div>
-                                    <div className="col-span-2">{doc.instrid.name || doc.instrid.first_name + " " + doc.instrid.last_name}</div>
+                                    <div className="col-span-2">{doc.instrid && doc.instrid.first_name + " " + doc.instrid.last_name}</div>
                                     <div>{doc.deptid.name}</div>
                                     {console.log(doc)}
                                 </Link>
